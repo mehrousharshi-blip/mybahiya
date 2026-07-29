@@ -1,1 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Bhaiya! 🎂</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-[#0b0314] text-white min-h-screen font-sans flex items-center justify-center overflow-x-hidden relative p-4">
 
+    <!-- Background Music Elements -->
+    <audio id="bg-audio" src="birthday.mp3" loop></audio>
+    <button id="music-btn" class="fixed top-4 right-4 z-50 px-4 py-2 rounded-full border border-white/10 backdrop-blur-md bg-white/5 text-xs text-neutral-300 flex items-center gap-1.5 transition active:scale-95">
+        <span id="music-icon">🎵</span> <span id="music-text">Play Music</span>
+    </button>
+
+    <!-- MAIN APP WRAPPER -->
+    <div class="w-full max-w-sm mx-auto min-h-[80vh] flex flex-col justify-center relative">
+
+        <!-- SCREEN 0: Chat Bubble screen -->
+        <div id="screen-0" class="screen-active space-y-6">
+            <div class="bg-[#1a0b2e]/60 border border-purple-900/40 rounded-3xl p-6 shadow-2xl backdrop-blur-md space-y-4">
+                <div class="flex items-end gap-2">
+                    <div class="w-8 h-8 rounded-full bg-pink-500 flex items-center justify-center text-xs shadow-md">👩</div>
+                    <div class="bg-neutral-800 text-sm py-2.5 px-4 rounded-2xl rounded-bl-none max-w-[80%] text-neutral-200">
+                        It's my birthday today, where's my gift?🎁🔥
+                    </div>
+                </div>
+                <div class="flex items-end gap-2 justify-end">
+                    <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-sm py-2.5 px-4 rounded-2xl rounded-br-none max-w-[80%] text-white text-right shadow-md">
+                        I have a cute surprise for you🥰
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center text-xs shadow-md">✨</div>
+                </div>
+            </div>
+            
+            <!-- Scan Card QR -->
+            <div class="bg-gradient-to-b from-neutral-900 to-neutral-950 border border-white/5 rounded-2xl p-6 text-center shadow-xl space-y-4">
+                <div class="w-36 h-36 mx-auto bg-white p-2 rounded-xl flex items-center justify-center shadow-inner relative">
+                    <!-- Placeholder QR or Heart design -->
+                    <div class="w-full h-full border-2 border-dashed border-red-500 flex items-center justify-center text-red-500 text-4xl font-bold">❤️</div>
+                </div>
+                <div class="text-xs font-mono uppercase tracking-widest text-neutral-400">✨ SCAN ME ✨</div>
+                <button onclick="startLoading()" class="w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 font-medium text-sm shadow-lg shadow-purple-600/30 transition hover:brightness-110 active:scale-[0.99]">
+                    Open Surprise ✨
+                </button>
+            </div>
+        </div>
+
+        <!-- SCREEN 1: Loading Screen -->
+        <div id="screen-1" class="screen-hidden text-center space-y-4">
+            <div class="text-4xl animate-bounce">🎂</div>
+            <div class="text-sm font-mono text-purple-300">Loading your birthday surprise...</div>
+            <div class="w-full h-2 bg-neutral-900 border border-white/5 rounded-full overflow-hidden max-w-[250px] mx-auto">
+                <div id="loading-bar" class="w-0 h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-300 ease-out"></div>
+            </div>
+        </div>
+
+        <!-- SCREEN 2: Intro Card (Panda Card) -->
+        <div id="screen-2" class="screen-hidden text-center space-y-6">
+            <div class="bg-white text-neutral-900 rounded-3xl p-6 shadow-2xl space-y-4 border-4 border-purple-200">
+                <div class="text-5xl">🐼</div>
+                <div class="space-y-1">
+                    <h2 class="text-xl font-bold text-purple-900">A Cutiepie was born today!</h2>
+                    <p class="text-xs text-neutral-500 font-medium">Yes, it's YOU! A little surprise awaits...</p>
+                </div>
+            </div>
+            <button onclick="nextScreen()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 font-medium text-sm shadow-md">
+                Start the surprise 🎁
+            </button>
+        </div>
+
+        <!-- SCREEN 3: Interactive Cake Layer -->
+        <div id="screen-3" class="screen-hidden text-center space-y-6">
+            <h2 class="text-2xl font-bold tracking-tight">Time to Decorate! 🎂</h2>
+            <div class="w-56 h-56 mx-auto bg-neutral-900/60 border border-white/5 rounded-2xl flex flex-col justify-end p-6 shadow-inner relative">
+                <!-- Flame Container -->
+                <div class="flex justify-center mb-4 relative z-10">
+                    <div id="cake-candle" class="w-2.5 h-10 bg-gradient-to-t from-pink-500 to-purple-400 rounded-full relative hidden">
+                        <div id="candle-flame" class="absolute -top-3.5 -left-1 w-4 h-4 bg-gradient-to-t from-amber-400 to-yellow-200 rounded-full shadow-[0_0_10px_#f59e0b] cursor-pointer" onclick="blowCandle()"></div>
+                    </div>
+                </div>
+                <!-- Cake Structure -->
+                <div class="space-y-1 relative z-10">
+                    <div class="w-24 h-5 bg-pink-200 rounded mx-auto shadow-sm"></div>
+                    <div id="cake-cream" class="w-36 h-7 bg-white rounded mx-auto shadow-md hidden animate-fade"></div>
+                    <div class="w-44 h-8 bg-purple-700 rounded mx-auto shadow-lg"></div>
+                </div>
+            </div>
+            <button id="cake-action-btn" onclick="decorateCake()" class="w-full py-3.5 rounded-xl bg-purple-600 font-medium text-sm shadow-md transition hover:bg-purple-500">
+                ✨ Decorate Cake
+            </button>
+        </div>
+
+        <!-- SCREEN 4: Balloon Popping -->
+        <div id="screen-4" class="screen-hidden text-center space-y-6">
+            <div class="space-y-1">
+                <h2 class="text-xl font-bold">Pop all 4 balloons 🎈</h2>
+                <p class="text-xs text-neutral-400 font-mono" id="balloon-counter">Balloons Left: 4</p>
+            </div>
+            <!-- Balloons Container Matrix -->
+            <div class="grid grid-cols-4 gap-3 py-4 max-w-[280px] mx-auto justify-items-center relative min-h-[120px]">
+                <div class="balloon-item w-12 h-16 bg-pink-500 rounded-full cursor-pointer flex items-center justify-center font-bold text-xs select-none shadow-lg shadow-pink-500/20" onclick="popBalloon(this, 'You')">🎈</div>
+                <div class="balloon-item w-12 h-16 bg-purple-500 rounded-full cursor-pointer flex items-center justify-center font-bold text-xs select-none shadow-lg shadow-purple-500/20" onclick="popBalloon(this, 'are')">🎈</div>
+                <div class="balloon-item w-12 h-16 bg-blue-500 rounded-full cursor-pointer flex items-center justify-center font-bold text-xs select-none shadow-lg shadow-blue-500/20" onclick="popBalloon(this, 'a')">🎈</div>
+                <div class="balloon-item w-12 h-16 bg-yellow-500 rounded-full cursor-pointer flex items-center justify-center font-bold text-xs select-none shadow-lg shadow-yellow-500/20" onclick="popBalloon(this, 'Cutie')">🎈</div>
+            </div>
+            <!-- Revealed Text Block -->
+            <div id="revealed-text" class="h-8 font-medium text-lg text-pink-400 transition-all duration-300"></div>
+            <button id="balloon-next-btn" onclick="nextScreen()" disabled class="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 font-medium text-sm disabled:opacity-30 transition-all">
+                Next ➔
+            </button>
+        </div>
+
+        <!-- SCREEN 5: Sweet Photo Slider Layout -->
+        <div id="screen-5" class="screen-hidden text-center space-y-6">
+            <div class="space-y-1">
+                <h2 class="text-xl font-bold">Some Sweet Moments 🌸</h2>
+                <p class="text-xs text-neutral-400">Swipe or click to view</p>
+            </div>
+            <!-- Slider Frame -->
+            <div class="relative w-full aspect-square max-w-[280px] mx-auto bg-neutral-900 border border-white/10 rounded-2xl overflow-hidden shadow-xl">
+                <div class="absolute inset-0 flex transition-transform duration-500 ease-out" id="slider-track">
+                    <!-- Replace these placeholders with your actual images (e.g., bhai1.jpg, bhai2.jpg) -->
+                    <div class="w-full h-full flex-shrink-0 bg-purple-950/40 flex items-center justify-center text-4xl">📸 Img 1</div>
+                    <div class="w-full h-full flex-shrink-0 bg-pink-950/40 flex items-center justify-center text-4xl">📸 Img 2</div>
+                    <div class="w-full h-full flex-shrink-0 bg-neutral-950/40 flex items-center justify-center text-4xl">📸 Img 3</div>
+                </div>
+                <!-- Navigation Dots -->
+                <div class="absolute bottom-3 inset-x-0 flex justify-center gap-1.5 z-10">
+                    <span class="w-2 h-2 rounded-full bg-white opacity-100 cursor-pointer" onclick="setSlide(0)"></span>
+                    <span class="w-2 h-2 rounded-full bg-white opacity-40 cursor-pointer" onclick="setSlide(1)"></span>
+                    <span class="w-2 h-2 rounded-full bg-white opacity-40 cursor-pointer" onclick="setSlide(2)"></span>
+                </div>
+            </div>
+            <button onclick="nextScreen()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 font-medium text-sm shadow-md">
+                ✉️ Open My Message
+            </button>
+        </div>
+
+        <!-- SCREEN 6: Gift Reveal Module -->
+        <div id="screen-6" class="screen-hidden text-center space-y-6">
+            <div class="space-y-1">
+                <h2 class="text-xl font-bold">One Last Thing... 🎁</h2>
+                <p class="text-xs text-neutral-400">Tap the gift to unlock your message</p>
+            </div>
+            <div class="py-8 flex justify-center items-center">
+                <div id="gift-box" class="text-6xl cursor-pointer animate-bounce transition-transform duration-300 hover:scale-110 active:scale-95" onclick="openGift()">
+                    🎁
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN 7: Final Screen Frame Overlay (Aapka Custom Text Message) -->
+        <div id="screen-7" class="screen-hidden space-y-6 max-h-[90vh] overflow-y-auto pr-1">
+            <div class="border-2 border-amber-400/80 rounded-3xl p-6 bg-[#080212]/90 shadow-2xl backdrop-blur-xl relative space-y-6 text-center">
+                
+                <h2 class="text-xl font-bold tracking-wide text-amber-400 drop-shadow">
+                    Happy Birthday once again, Bhaiya! 💛
+                </h2>
+
+                <!-- Custom Wishes Set Layout -->
+                <div class="space-y-5 text-sm leading-relaxed text-neutral-200">
+                    <p>May Allah bless you with endless happiness,</p>
+                    <p>success in everything you do,</p>
+                    <p>and all the love your heart can hold.</p>
+                </div>
+
+                <div class="space-y-5 text-sm leading-relaxed text-neutral-200">
+                    <p>May your days be filled with joy,</p>
+                    <p>your dreams come true,</p>
+                    <p>and may you always be surrounded by love.</p>
+                </div>
+
+                <p class="text-sm font-medium tracking-wide text-neutral-100">
+                    You deserve all the best things in life!
+                </p>
+
+                <!-- Footer Sign-off Section -->
+                <div class="space-y-1 pt-2 border-t border-white/5">
+                    <p class="text-sm font-semibold text-amber-400">With lots of love and duas,</p>
+                    <p class="text-base font-bold text-white flex items-center justify-center gap-1">
+                        Your Little Sister 🌸
+                    </p>
+                </div>
+
+                <!-- Action Button Controls -->
+                <button onclick="restartCelebration()" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 font-semibold text-neutral-950 text-xs shadow-lg shadow-amber-500/20 tracking-wider transition hover:brightness-110 active:scale-95">
+                    🎉 Celebrate Again
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
