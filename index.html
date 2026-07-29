@@ -4,20 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday Bhaiya! 🎂</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Canvas Confetti Library -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-[#0b0314] text-white min-h-screen font-sans flex items-center justify-center overflow-x-hidden relative p-4">
-
-    <audio id="bg-audio" src="birthday.mp3" loop></audio>
-<button id="music-btn" ... > ... </button>
-    <button id="music-btn" class="fixed top-4 right-4 z-50 px-4 py-2 rounded-full border border-white/10 backdrop-blur-md bg-white/5 text-xs text-neutral-300 flex items-center gap-1.5 transition active:scale-95">
-        <span id="music-icon">🎵</span> <span id="music-text">Play Music</span>
-    </button>
+<body class="bg-[#0b0314] text-white min-h-screen flex items-center justify-center overflow-x-hidden relative p-4">
 
     <!-- MAIN APP WRAPPER -->
     <div class="w-full max-w-sm mx-auto min-h-[85vh] flex flex-col justify-center relative">
@@ -84,7 +74,7 @@
                 </div>
                 <div class="space-y-1 relative z-10">
                     <div class="w-24 h-5 bg-pink-200 rounded mx-auto shadow-sm"></div>
-                    <div id="cake-cream" class="w-36 h-7 bg-white rounded mx-auto shadow-md hidden animate-fade"></div>
+                    <div id="cake-cream" class="w-36 h-7 bg-white rounded mx-auto shadow-md hidden"></div>
                     <div class="w-44 h-8 bg-purple-700 rounded mx-auto shadow-lg"></div>
                 </div>
             </div>
@@ -111,16 +101,11 @@
             </button>
         </div>
 
-        <!-- SCREEN 5: Main Birthday Message Card & Photo Section -->
+        <!-- SCREEN 5: Main Birthday Message Card -->
         <div id="screen-5" class="screen-hidden space-y-4 max-h-[85vh] overflow-y-auto pr-1">
             <div class="bg-gradient-to-b from-neutral-900 to-neutral-950 border border-white/10 rounded-3xl p-5 shadow-2xl space-y-6 text-center text-sm">
                 
                 <div class="text-purple-400 font-bold text-base tracking-wider">🎉 HAPPY BIRTHDAY BHAIYA 🎉</div>
-
-                <!-- 📸 PHOTO CONTAINER: Agar aapko pics lagani hain, toh "bhai1.jpg" ki jagah apni image ka sahi naam likhein. Agar photo nahi lagani toh is pure <div> ko delete kar sakti hain -->
-                <div class="w-full max-w-[260px] mx-auto aspect-square bg-neutral-900/40 rounded-2xl overflow-hidden border border-white/10 shadow-md">
-                    <img src="bhai1.jpg" alt="Bhaiya's Picture" class="w-full h-full object-cover" onerror="this.style.display='none';">
-                </div>
                 
                 <div class="space-y-2 text-neutral-200">
                     <p class="font-semibold text-white">Happy Birthday!</p>
@@ -167,7 +152,7 @@
                     <div class="text-base text-yellow-200 leading-relaxed space-y-1.5" style="direction: rtl;">
                         <p>کروڑوں دعاؤں اور خوشیوں کے لازوال خزانے کے ساتھ</p>
                         <p>آپ کی سالگرہ کا اور ہر آنے wala din</p>
-                        <p>خوشیوں ،رحمتوں، اور برکتوں wala ho</p>
+                        <p>خوشیوں ،رحمتوں، اور برکتوں والا ہو</p>
                         <p>ربِ کائنات آپ کو ڈھیروں، کامیابیاں، اور خوشیاں نصیب کرے...😍</p>
                     </div>
                     <p class="text-pink-400 font-bold" style="direction: rtl;">💗آمــیـن یا ربـــ العالمـیــن💗</p>
@@ -200,11 +185,11 @@
             </div>
         </div>
 
-        <!-- SCREEN 7: Final Page (Image Text Layout Only) -->
+        <!-- SCREEN 7: Final Page (Text Content Only) -->
         <div id="screen-7" class="screen-hidden space-y-6 max-h-[85vh] overflow-y-auto pr-1">
-            <div class="border-2 border-amber-400/80 rounded-3xl p-6 bg-[#120626]/95 shadow-2xl backdrop-blur-xl relative space-y-6 text-center animate-fade">
+            <div class="border-2 border-amber-400/80 rounded-3xl p-6 bg-[#120626]/95 shadow-2xl backdrop-blur-xl relative space-y-6 text-center">
                 
-                <h2 class="text-xl font-bold tracking-wide text-amber-400 drop-shadow">
+                <h2 class="text-xl font-bold tracking-wide text-amber-400">
                     Happy Birthday once again, Bhaiya! 💛
                 </h2>
 
@@ -231,7 +216,7 @@
                     </p>
                 </div>
 
-                <button onclick="restartCelebration()" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 font-bold text-neutral-950 text-xs shadow-lg shadow-amber-500/20 tracking-widest transition hover:brightness-110 active:scale-95 uppercase">
+                <button onclick="restartCelebration()" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 font-bold text-neutral-950 text-xs tracking-widest uppercase">
                     🎉 Celebrate Again
                 </button>
             </div>
@@ -240,5 +225,7 @@
     </div>
 
     <script src="script.js"></script>
+</body>
+</html>
 </body>
 </html>
