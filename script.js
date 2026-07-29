@@ -1,28 +1,39 @@
 let currentScreen = 0;
 
+// Music Logic with Error Handling (Taake page crash na ho)
 const audio = document.getElementById('bg-audio');
 const musicBtn = document.getElementById('music-btn');
 const musicIcon = document.getElementById('music-icon');
 const musicText = document.getElementById('music-text');
 
-musicBtn.addEventListener('click', () => {
-    if (audio.paused) {
-        audio.play().catch(err => console.log("Audio deferred:", err));
-        musicIcon.innerText = "⏸";
-        musicText.innerText = "Pause Music";
-        musicBtn.classList.add('bg-emerald-500/20', 'border-emerald-500/30', 'text-emerald-300');
-    } else {
-        audio.pause();
-        musicIcon.innerText = "🎵";
-        musicText.innerText = "Play Music";
-        musicBtn.classList.remove('bg-emerald-500/20', 'border-emerald-500/30', 'text-emerald-300');
-    }
-});
+if (musicBtn && audio) {
+    musicBtn.addEventListener('click', () => {
+        if (audio.paused) {
+            audio.play()
+                .then(() => {
+                    musicIcon.innerText = "⏸";
+                    musicText.innerText = "Pause Music";
+                    musicBtn.className = "fixed top-4 right-4 z-50 px-4 py-2 rounded-full border border-emerald-500/30 backdrop-blur-md bg-emerald-500/20 text-xs text-emerald-300 flex items-center gap-1.5 transition active:scale-95";
+                })
+                .catch(err => {
+                    console.log("Audio play blocked or file missing:", err);
+                    alert("Click anywhere on the screen first, then try playing the music!");
+                });
+        } else {
+            audio.pause();
+            musicIcon.innerText = "🎵";
+            musicText.innerText = "Play Music";
+            musicBtn.className = "fixed top-4 right-4 z-50 px-4 py-2 rounded-full border border-white/10 backdrop-blur-md bg-white/5 text-xs text-neutral-300 flex items-center gap-1.5 transition active:scale-95";
+        }
+    });
+}
 
 function changeScreen(targetIndex) {
-    document.getElementById(`screen-${currentScreen}`).className = "screen-hidden";
+    const currentEl = document.getElementById(`screen-${currentScreen}`);
+    const targetEl = document.getElementById(`screen-${targetIndex}`);
+    if (currentEl) currentEl.className = "screen-hidden";
+    if (targetEl) targetEl.className = "screen-active";
     currentScreen = targetIndex;
-    document.getElementById(`screen-${currentScreen}`).className = "screen-active";
 }
 
 function nextScreen() {
@@ -39,7 +50,7 @@ function startLoading() {
             setTimeout(() => { changeScreen(2); }, 300);
         } else {
             width += 4;
-            progressBar.style.width = width + '%';
+            if (progressBar) progressBar.style.width = width + '%';
         }
     }, 80);
 }
@@ -48,45 +59,65 @@ let cakeStage = 0;
 function decorateCake() {
     const actionBtn = document.getElementById('cake-action-btn');
     if (cakeStage === 0) {
-        document.getElementById('cake-cream').classList.remove('hidden');
-        actionBtn.innerText = "🔥 Light the Candle";
+        const cream = document.getElementById('cake-cream');
+        if (cream) cream.classList.remove('hidden');
+        if (actionBtn) actionBtn.innerText = "🔥 Light the Candle";
         cakeStage = 1;
     } else if (cakeStage === 1) {
-        document.getElementById('cake-candle').classList.remove('hidden');
-        actionBtn.innerText = "Blow the Candle💨";
-        actionBtn.onclick = null;
+        const candle = document.getElementById('cake-candle');
+        if (candle) candle.classList.remove('hidden');
+        if (actionBtn) {
+            actionBtn.innerText = "Blow the Candle 💨";
+            actionBtn.onclick = null;
+        }
         cakeStage = 2;
     }
 }
 
 function blowCandle() {
-    document.getElementById('candle-flame').style.display = 'none';
-    confetti({ particleCount: 100, spread: 60, origin: { y: 0.6 } });
+    const flame = document.getElementById('candle-flame');
+    if (flame) flame.style.display = 'none';
+    
+    try {
+        confetti({ particleCount: 100, spread: 60, origin: { y: 0.6 } });
+    } catch(e) { console.log("Confetti load defer:", e); }
     
     const actionBtn = document.getElementById('cake-action-btn');
-    actionBtn.innerText = "Next Chapter ➔";
-    actionBtn.onclick = nextScreen;
+    if (actionBtn) {
+        actionBtn.innerText = "Next Chapter ➔";
+        actionBtn.onclick = nextScreen;
+    }
 }
 
 let totalBalloons = 4;
 let messageArray = [];
 function popBalloon(element, word) {
-    element.style.visibility = 'hidden';
-    element.style.pointerEvents = 'none';
+    if (element) {
+        element.style.visibility = 'hidden';
+        element.style.pointerEvents = 'none';
+    }
     messageArray.push(word);
     
-    document.getElementById('revealed-text').innerText = messageArray.join(" ");
+    const revText = document.getElementById('revealed-text');
+    const counter = document.getElementById('balloon-counter');
+    const nextBtn = document.getElementById('balloon-next-btn');
+    
+    if (revText) revText.innerText = messageArray.join(" ");
     totalBalloons--;
-    document.getElementById('balloon-counter').innerText = `Balloons Left: ${totalBalloons}`;
+    if (counter) counter.innerText = `Balloons Left: ${totalBalloons}`;
     
     if (totalBalloons === 0) {
-        document.getElementById('balloon-next-btn').disabled = false;
-        confetti({ particleCount: 50, spread: 40 });
+        if (nextBtn) nextBtn.disabled = false;
+        try {
+            confetti({ particleCount: 50, spread: 40 });
+        } catch(e) {}
     }
 }
 
 function openGift() {
-    confetti({ particleCount: 180, spread: 100 });
+    try {
+        confetti({ particleCount: 180, spread: 100 });
+    } catch(e) {}
     setTimeout(() => { nextScreen(); }, 400);
 }
 
@@ -95,21 +126,30 @@ function restartCelebration() {
     totalBalloons = 4;
     messageArray = [];
     
-    document.getElementById('candle-flame').style.display = 'block';
-    document.getElementById('cake-candle').classList.add('hidden');
-    document.getElementById('cake-cream').classList.add('hidden');
-    
+    const flame = document.getElementById('candle-flame');
+    const candle = document.getElementById('cake-candle');
+    const cream = document.getElementById('cake-cream');
     const cakeBtn = document.getElementById('cake-action-btn');
-    cakeBtn.innerText = "✨ Decorate Cake";
-    cakeBtn.onclick = decorateCake;
+    const counter = document.getElementById('balloon-counter');
+    const revText = document.getElementById('revealed-text');
+    const nextBtn = document.getElementById('balloon-next-btn');
+    
+    if (flame) flame.style.display = 'block';
+    if (candle) candle.classList.add('hidden');
+    if (cream) cream.classList.add('hidden');
+    
+    if (cakeBtn) {
+        cakeBtn.innerText = "✨ Decorate Cake";
+        cakeBtn.onclick = decorateCake;
+    }
 
     document.querySelectorAll('.balloon-item').forEach(b => {
         b.style.visibility = 'visible';
         b.style.pointerEvents = 'auto';
     });
-    document.getElementById('balloon-counter').innerText = "Balloons Left: 4";
-    document.getElementById('revealed-text').innerText = "";
-    document.getElementById('balloon-next-btn').disabled = true;
+    if (counter) counter.innerText = "Balloons Left: 4";
+    if (revText) revText.innerText = "";
+    if (nextBtn) nextBtn.disabled = true;
     
     changeScreen(0);
 }
