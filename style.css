@@ -1,1 +1,56 @@
+body {
+    background-color: #0b0314;
+    font-family: 'Poppins', sans-serif;
+}
 
+.screen-hidden {
+    display: none !important;
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+}
+
+.screen-active {
+    display: block !important;
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    animation: transitionReveal 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes transitionReveal {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.balloon-item {
+    animation: floatOverlay 3s ease-in-out infinite alternate;
+}
+.balloon-item:nth-child(2n) {
+    animation-duration: 3.5s;
+    animation-delay: 0.3s;
+}
+.balloon-item:nth-child(3n) {
+    animation-duration: 2.8s;
+    animation-delay: 0.6s;
+}
+
+@keyframes floatOverlay {
+    from { transform: translateY(0px) rotate(-2deg); }
+    to { transform: translateY(-8px) rotate(2deg); }
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(168, 85, 247, 0.3);
+    border-radius: 10px;
+}
