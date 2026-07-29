@@ -1,33 +1,5 @@
 let currentScreen = 0;
 
-// Music Logic with Error Handling (Taake page crash na ho)
-const audio = document.getElementById('bg-audio');
-const musicBtn = document.getElementById('music-btn');
-const musicIcon = document.getElementById('music-icon');
-const musicText = document.getElementById('music-text');
-
-if (musicBtn && audio) {
-    musicBtn.addEventListener('click', () => {
-        if (audio.paused) {
-            audio.play()
-                .then(() => {
-                    musicIcon.innerText = "⏸";
-                    musicText.innerText = "Pause Music";
-                    musicBtn.className = "fixed top-4 right-4 z-50 px-4 py-2 rounded-full border border-emerald-500/30 backdrop-blur-md bg-emerald-500/20 text-xs text-emerald-300 flex items-center gap-1.5 transition active:scale-95";
-                })
-                .catch(err => {
-                    console.log("Audio play blocked or file missing:", err);
-                    alert("Click anywhere on the screen first, then try playing the music!");
-                });
-        } else {
-            audio.pause();
-            musicIcon.innerText = "🎵";
-            musicText.innerText = "Play Music";
-            musicBtn.className = "fixed top-4 right-4 z-50 px-4 py-2 rounded-full border border-white/10 backdrop-blur-md bg-white/5 text-xs text-neutral-300 flex items-center gap-1.5 transition active:scale-95";
-        }
-    });
-}
-
 function changeScreen(targetIndex) {
     const currentEl = document.getElementById(`screen-${currentScreen}`);
     const targetEl = document.getElementById(`screen-${targetIndex}`);
@@ -52,7 +24,7 @@ function startLoading() {
             width += 4;
             if (progressBar) progressBar.style.width = width + '%';
         }
-    }, 80);
+    }, 50);
 }
 
 let cakeStage = 0;
@@ -77,10 +49,6 @@ function decorateCake() {
 function blowCandle() {
     const flame = document.getElementById('candle-flame');
     if (flame) flame.style.display = 'none';
-    
-    try {
-        confetti({ particleCount: 100, spread: 60, origin: { y: 0.6 } });
-    } catch(e) { console.log("Confetti load defer:", e); }
     
     const actionBtn = document.getElementById('cake-action-btn');
     if (actionBtn) {
@@ -108,17 +76,11 @@ function popBalloon(element, word) {
     
     if (totalBalloons === 0) {
         if (nextBtn) nextBtn.disabled = false;
-        try {
-            confetti({ particleCount: 50, spread: 40 });
-        } catch(e) {}
     }
 }
 
 function openGift() {
-    try {
-        confetti({ particleCount: 180, spread: 100 });
-    } catch(e) {}
-    setTimeout(() => { nextScreen(); }, 400);
+    setTimeout(() => { nextScreen(); }, 300);
 }
 
 function restartCelebration() {
