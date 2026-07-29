@@ -111,11 +111,16 @@
             </button>
         </div>
 
-        <!-- SCREEN 5: Main Birthday Message Card (Scrollable Details) -->
+        <!-- SCREEN 5: Main Birthday Message Card & Photo Section -->
         <div id="screen-5" class="screen-hidden space-y-4 max-h-[85vh] overflow-y-auto pr-1">
             <div class="bg-gradient-to-b from-neutral-900 to-neutral-950 border border-white/10 rounded-3xl p-5 shadow-2xl space-y-6 text-center text-sm">
                 
                 <div class="text-purple-400 font-bold text-base tracking-wider">🎉 HAPPY BIRTHDAY BHAIYA 🎉</div>
+
+                <!-- 📸 PHOTO CONTAINER: Agar aapko pics lagani hain, toh "bhai1.jpg" ki jagah apni image ka sahi naam likhein. Agar photo nahi lagani toh is pure <div> ko delete kar sakti hain -->
+                <div class="w-full max-w-[260px] mx-auto aspect-square bg-neutral-900/40 rounded-2xl overflow-hidden border border-white/10 shadow-md">
+                    <img src="bhai1.jpg" alt="Bhaiya's Picture" class="w-full h-full object-cover" onerror="this.style.display='none';">
+                </div>
                 
                 <div class="space-y-2 text-neutral-200">
                     <p class="font-semibold text-white">Happy Birthday!</p>
@@ -125,7 +130,7 @@
                     <p class="text-purple-300">Happy Birthday once again. 💙</p>
                 </div>
 
-                <div class="bg-white/[0.02] border border-white/5 rounded-xl p-3 font-mono text-[10px] text-pink-400/90 leading-relaxed whitespace-pre overflow-x-auto">
+                <div class="bg-white/[0.02] border border-white/5 rounded-xl p-3 font-mono text-[10px] text-pink-400/90 leading-relaxed whitespace-pre overflow-x-auto mx-auto max-w-full">
 | ┌ ┐💗
 └ ┘APPY_🎂🎆🎉
 ┌┐    🄱🄸🅁🅃🄷🄳🄰🅁🎉🎆🌌
@@ -142,8 +147,8 @@
                     <p class="text-base text-amber-300 font-medium" style="direction: rtl;">💗وہ لمحے تمہارے قدموں میں ہوں💗</p>
                     <p class="text-[11px] uppercase tracking-wider text-neutral-400 font-mono">May All Y◯ur *Dreams* C◯me True 🥰</p>
                     
-                    <p class="text-base text-amber-300 font-medium" style="direction: rtl;">💗خدا وہ सब کچھ تم کو دے 😻</p>
-                    <p class="text-[11px] uppercase tracking-wider text-neutral-400 font-mono">May Y◯u Have *Always* Smile Like *TOday* 💙</p>
+                    <p class="text-base text-amber-300 font-medium" style="direction: rtl;">💗خدا وہ سب کچھ تم کو دے 😻</p>
+                    <p class="text-[11px] uppercase tracking-wider text-neutral-400 font-mono">May You Have *Always* Smile Like *Today* 💙</p>
                     
                     <p class="text-base text-amber-300 font-medium" style="direction: rtl;">💗جو سوچا tum ne apne sapnon mein ho 🥺-♡︎</p>
                 </div>
@@ -162,7 +167,7 @@
                     <div class="text-base text-yellow-200 leading-relaxed space-y-1.5" style="direction: rtl;">
                         <p>کروڑوں دعاؤں اور خوشیوں کے لازوال خزانے کے ساتھ</p>
                         <p>آپ کی سالگرہ کا اور ہر آنے wala din</p>
-                        <p>خوشیوں ،رحمتوں، اور برکتوں والا ہو</p>
+                        <p>خوشیوں ،رحمتوں، اور برکتوں wala ho</p>
                         <p>ربِ کائنات آپ کو ڈھیروں، کامیابیاں، اور خوشیاں نصیب کرے...😍</p>
                     </div>
                     <p class="text-pink-400 font-bold" style="direction: rtl;">💗آمــیـن یا ربـــ العالمـیــن💗</p>
